@@ -1,27 +1,24 @@
-DROP DATABASE IF EXISTS vadlyssnardupa;
-CREATE DATABASE vadlyssnardupa;
-USE vadlyssnardupa;
+DROP DATABASE IF EXISTS aristowebb;
+CREATE DATABASE aristowebb;
+USE aristowebb;
 
-CREATE TABLE posts(
+CREATE TABLE cats(
     id              INT             NOT NULL    AUTO_INCREMENT,
-    posted_date     DATETIME        NOT NULL,
-    post_title      VARCHAR(500)    NOT NULL,
-    post_text       TEXT            NOT NULL,
-    is_episode      BIT,
-    episode_url     VARCHAR(1000),             
+    cat_name        VARCHAR(200)    NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE tokens(
-    token           VARCHAR(8)     NOT NULL,
-    created_date    DATETIME        NOT NULL,
-    PRIMARY KEY (token)
+CREATE TABLE tasks(
+    id              INT             NOT NULL    AUTO_INCREMENT,
+    title           VARCHAR(500)    NOT NULL,
+    points          INT             NOT NULL,
+    more_than_one   BIT,
+    PRIMARY KEY (id)
 );
 
-SET GLOBAL event_scheduler = ON;
-
-CREATE EVENT Weekly_cleanup
-ON SCHEDULE EVERY 1 WEEK
-DO
-    DELETE FROM tokens
-    WHERE DATEDIFF(NOW(), created_date) > 7;
+CREATE TABLE completions(
+    id              INT             NOT NULL    AUTO_INCREMENT,
+    cat_id          INT             NOT NULL,
+    task_id         INT             NOT NULL,
+    PRIMARY KEY (id)
+);
