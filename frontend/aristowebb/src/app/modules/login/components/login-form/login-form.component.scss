@@ -24,6 +24,7 @@
             width: 100%;
             text-align: center;
             font-style: italic;
+            white-space: nowrap;
         }
     }
     .form {
@@ -31,6 +32,11 @@
         margin-right: auto;
         min-width: 300px;
         width: 40%;
+        .button {
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+        }
     }
 }
 

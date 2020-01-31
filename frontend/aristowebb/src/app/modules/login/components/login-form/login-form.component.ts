@@ -7,4 +7,8 @@ import { Component } from "@angular/core";
 })
 export class LoginFormComponent {
     
+    private login(event: Event) {
+        console.log("hej")
+        event.preventDefault();
+    }
 }

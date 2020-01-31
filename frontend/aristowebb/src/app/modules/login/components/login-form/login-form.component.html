@@ -9,11 +9,14 @@
     </div>
     <div class="form">
         <mat-card>
-            <form>
+            <form (ngSubmit)="login($event)">
                 <mat-form-field class="full-width">
                     <input matInput type="password" placeholder="Lösenord" value="">
                 </mat-form-field>
             </form>
+            <div class="button">
+                <button mat-raised-button color="primary" (click)="login($event)">Login</button>
+            </div>
         </mat-card>
     </div>
 </div>
