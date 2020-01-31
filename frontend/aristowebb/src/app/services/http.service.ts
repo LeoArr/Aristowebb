@@ -106,12 +106,12 @@ export class HttpService implements CanActivate {
     isAuthenticated(): Observable<boolean> {
         let token = localStorage.getItem(environment.localStorageKey);
         if (!token) return of(false);
-        return this.http.get<boolean>(this.apiUrl + '/is-authenticated',
+        return this.http.get<ApiResponse>(this.apiUrl + '/is-authenticated',
             { headers: { 
                 Authorization: token,
                 'Content-Type': 'application/json'
             }}).pipe(
-                map(((result: boolean) => result))
+                map(((result: ApiResponse) => result.success))
             );
     }
 
@@ -121,7 +121,7 @@ export class HttpService implements CanActivate {
                 if (result) {
                     return true;
                 } else {
-                    this.router.navigate(['/admin']);
+                    this.router.navigate(['']);
                     return false
                 }
             }),

@@ -12,13 +12,15 @@ export class LoginFormComponent implements OnInit {
     
     password = "";
 
+    incorrect = false;
+
     constructor(private httpService: HttpService,
                 private router: Router) {}
 
     ngOnInit() {
         this.httpService.isAuthenticated()
             .subscribe(res => {
-                res ? this.router.navigate(['']) : this.router.navigate(['']);
+                res ? this.router.navigate(['home']) : this.router.navigate(['']);
             })
     }
 
@@ -27,7 +29,13 @@ export class LoginFormComponent implements OnInit {
         if (!this.password) return;
         this.httpService
             .authenticate(this.password)
-            .subscribe(res => this.storeToken(res));
+            .subscribe(res => {
+                this.storeToken(res)
+                if (res.length > 0)
+                    this.router.navigate(['home'])
+                else
+                    this.incorrect = true;
+            });
         this.password = "";
     }
 

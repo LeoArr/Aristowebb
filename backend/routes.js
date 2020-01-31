@@ -44,8 +44,9 @@ const configureRoutes = function(app) {
                 message: ''
             })
         } else {
-            res.status(403);
-            res.send('None shall pass');
+            res.send({
+                success: false,
+            })
         }
     });
 }
