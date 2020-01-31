@@ -1,0 +1,20 @@
+.tasks-view {
+    .header {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.task-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .title {
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .points {
+
+    }
+}

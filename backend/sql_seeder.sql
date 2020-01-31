@@ -10,7 +10,8 @@ CREATE TABLE cats(
 
 CREATE TABLE tasks(
     id              INT             NOT NULL    AUTO_INCREMENT,
-    title           VARCHAR(500)    NOT NULL,
+    title           VARCHAR(200)    NOT NULL,
+    task_description VARCHAR(200)    NOT NULL,
     points          INT             NOT NULL,
     more_than_one   BIT,
     PRIMARY KEY (id)
