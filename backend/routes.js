@@ -25,13 +25,24 @@ const configureRoutes = function(app) {
     //     });
     // });
 
+    app.get('/is-authenticated', (req, res) => {
+        res.send({ success: authenticate(req.headers.authorization)})
+    });
 
     app.get('/authenticate', (req, res) => {
         let password = req.headers.authorization;
         if (!!password && (password == config.password)) {
-            res.send(config.token);
+            res.send({
+                success: true,
+                data: config.token,
+                message: ''
+            });
         } else if (!!password && password == config.admin_password) {
-            res.send(config.admin_token)
+            res.send({
+                success: true,
+                data: config.admin_token,
+                message: ''
+            })
         } else {
             res.status(403);
             res.send('None shall pass');
