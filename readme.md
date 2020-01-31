@@ -11,4 +11,4 @@ starta med node
 >> node index.js
 
 Angular i frontend
->>ng start
+>>ng s

@@ -1,0 +1,39 @@
+::ng-deep .mat-form-field-label{
+    color:green !important;
+}
+::ng-deep .mat-form-field-underline{
+    background-color:green !important;
+}
+
+.login-form {
+    width: 100%;
+    margin-top: 20px;
+    .moria {
+        margin-bottom: 20px;
+        margin-left:  auto;
+        margin-right: auto;
+        width: 40%;
+        .gate {
+            display: flex;
+            justify-content: center;
+            img {
+                max-height: 150px;
+            }
+        }
+        .quote {
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+        }
+    }
+    .form {
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 300px;
+        width: 40%;
+    }
+}
+
+.full-width {
+    width: 100%;
+}
