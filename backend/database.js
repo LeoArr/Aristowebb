@@ -21,6 +21,17 @@ const toCat = function(cat) {
     }
 }
 
+const toMessage = function(mes){
+    if (!mes) return null;
+    return {
+        id: mes.id,
+        author: mes.author,
+        message: mes.m_text,
+        image: mes.m_image,
+        posted: mes.posted_date
+    }
+}
+
 var database = {
     connection: mysql.createConnection({
         host     : config.db_host,
@@ -46,6 +57,14 @@ var database = {
             });
         });
     },
+    newTask: function(callback, task) {
+        var sql = "INSERT INTO tasks (task_title, task_description, points, more_than_one) VALUES ";
+        sql += "('" + task.title + "', '" + task.description + "', " + task.points + ", " + !task.exclusive + ")";
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true });
+        });
+    },
     getCats: function(callback, id) {
         var sql = "SELECT * FROM cats;";
         this.connection.query(sql, function (err, result) {
@@ -59,6 +78,22 @@ var database = {
         this.connection.query(sql, function (err, result) {
             if (err) return callback({ success: false, message: err });
             callback({ success: true, data: result[0].timetable });
+        });
+    },
+
+    getMessages: function(callback) {
+        var sql = "SELECT * FROM messages ORDER BY posted_date DESC;"
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true, data: result.map(res => toMessage(res)) });
+        });
+    },
+
+    deleteMessage: function(callback, id) {
+        var sql = "DELETE FROM messages WHERE id=" + id + ";";
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true, });
         });
     },
 
@@ -83,47 +118,21 @@ var database = {
     },
 
     addCompletor: function(callback, completion) {
-        var sql = "INSERT INTO completions (task_id, cat_id) VALUES (" + completion.taskId + ", " + completion.catId + ")";
+        var sql = "INSERT INTO completions (task_id, cat_id) VALUES (" + completion.taskId + ", " + completion.catId + ");";
         this.connection.query(sql, function (err, result) {
             if (err) return callback({ success: false, message: err });
             return callback({ success: true });
         })
     },
 
-    // createPost: function(callback, post) {
-    //     var self = this;
-        
-    //     var sql = "INSERT INTO posts " + 
-    //         "(posted_date,post_title,post_text,is_episode,episode_url)" + 
-    //         "VALUES (NOW(),'" + post.title + "','" + post.text + "'," +
-    //         (post.isEpisode ? 1 : 0) + ",'" + post.episodeUrl + "');";
-    //     this.connection.query(sql, function (err, result) {
-    //         if (err) return callback({ success: false, message: err });
-    //         self.getPost((_res) => {
-    //             callback(_res);
-    //         }, result.insertId);
-    //     });
-    // },
-    // updatePost: function(callback, post) {
-    //     var self = this;
-    //     var sql = "UPDATE posts SET " + 
-    //         "post_title='" + post.title + "', post_text='" + post.text + "', " +
-    //         "is_episode=" + (post.isEpisode ? 1 : 0) + ", episode_url='" + post.episodeUrl + "' " +
-    //         " WHERE id='" + post.id + "';";
-    //     this.connection.query(sql, function (err, result) {
-    //         if (err) return callback({ success: false, message: err });
-    //         self.getPosts((_res) => {
-    //             callback(_res);
-    //         }, post.id);
-    //     });
-    // },
-    // deletePost: function(callback, id) {
-    //     var sql = "DELETE FROM posts WHERE id=" + id + ";";
-    //     this.connection.query(sql, function (err, result) {
-    //         if (err) return callback({ success: false, message: err });
-    //         callback({ success: !!result.affectedRows });
-    //     });
-    // },
+    addMessage: function(callback, message) {
+        var sql = "INSERT INTO messages (author, m_text, posted_date, m_image) VALUES ('" + message.author + "', '" + message.message + "', NOW(), '" + message.image + "');";
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            return callback({ success: true });
+        })
+    },
+
     isAuthenticated: function(callback, token) {
         var sql = "SELECT * FROM tokens WHERE token='" + token + "';";
         this.connection.query(sql, function (err, result) {

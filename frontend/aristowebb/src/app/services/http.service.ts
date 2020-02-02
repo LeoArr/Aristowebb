@@ -5,6 +5,7 @@ import { ApiResponse, Task, Cat, Score } from '../models';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
+import { Message } from '../models/Message';
 
 @Injectable(
     {
@@ -22,7 +23,7 @@ export class HttpService implements CanActivate {
 
     addCompletion(taskId, catId): Observable<boolean> {
         let token = localStorage.getItem(environment.localStorageKey);
-        return this.http.post<ApiResponse>(this.apiUrl + '/task',
+        return this.http.post<ApiResponse>(this.apiUrl + '/completion',
         {
             catId: catId,
             taskId: taskId
@@ -37,19 +38,18 @@ export class HttpService implements CanActivate {
         );
     }
 
-    // put(post: Post): Observable<boolean> {
-    //     let token = localStorage.getItem(environment.localStorageKey);
-    //     return this.http.put<ApiResponse>(this.apiUrl + '/post', post,
-    //     { headers: { 
-    //         Authorization: token,
-    //         'Content-Type': 'application/json'
-    //     }}).pipe(
-    //         map((result: ApiResponse) => {
-    //             return result.success;
-    //         })
-    //     );
-    // }
-
+    postTask(newTask): Observable<boolean> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        return this.http.post<ApiResponse>(this.apiUrl + '/task', newTask,
+        { headers: { 
+            Authorization: token,
+            'Content-Type': 'application/json'
+        }}).pipe(
+            map((result: ApiResponse) => {
+                return result.success;
+            })
+        );
+    }
 
     updateTimetable(newText: string): Observable<boolean> {
         let token = localStorage.getItem(environment.localStorageKey);
@@ -124,6 +124,63 @@ export class HttpService implements CanActivate {
                 } else {
                     return [];
                 }
+            })
+        );
+    }
+
+    getMessages(): Observable<Message[]> {
+        return this.http.get<ApiResponse>(this.apiUrl + '/messages', 
+            { headers: { 
+                'Content-Type': 'application/json'
+            }
+        }).pipe(
+            map((response: ApiResponse) => {
+                if (response.success) {
+                    return <Message[]> response.data
+                } else {
+                    return [];
+                }
+            })
+        );
+    }
+
+    uploadImage(imageData: string | Blob): Observable<string> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        let formData = new FormData();
+        formData.append('file', imageData, 'kalle');
+        return this.http.post<ApiResponse>(this.apiUrl + '/upload', formData,
+        { headers: { 
+            Authorization: token,
+        }}).pipe(
+            map((result: ApiResponse) => {
+                if (result.success)
+                    return result.data;
+                return "";
+            })
+        );
+    }
+
+    newMessage(newMessage: Message): Observable<boolean> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        return this.http.post<ApiResponse>(this.apiUrl + '/message', newMessage,
+        { headers: { 
+            Authorization: token,
+            'Content-Type': 'application/json'
+        }}).pipe(
+            map((result: ApiResponse) => {
+                return result.success;
+            })
+        );
+    }
+
+    deleteMessage(id: number): Observable<boolean> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        return this.http.delete<ApiResponse>(this.apiUrl + '/message/' + id,
+        { headers: { 
+            Authorization: token,
+        }}).pipe(
+            map((result: ApiResponse) => {
+                return result.success;
             })
         );
     }

@@ -33,6 +33,18 @@ CREATE TABLE timetable(
     PRIMARY KEY (id)
 );
 
+CREATE TABLE messages(
+    id              INT             NOT NULL    AUTO_INCREMENT,
+    author          VARCHAR(200)    NOT NULL,
+    m_text          TEXT,
+    m_image         VARCHAR(100),
+    posted_date     DATETIME        NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO messages (author, m_text, posted_date, m_image) VALUES ("Kupp Mupp", "Test test", DATE_ADD(NOW(), INTERVAL -1 DAY), 'lol.png');
+INSERT INTO messages (author, m_text, posted_date) VALUES ("Kupp Mupp", "Test test tidigare", NOW());
+
 INSERT INTO timetable (timetable) VALUES ("<b>Lorem ipsum dolor sit amet</b> \n eum at suavitate sadipscing, elit dolorem efficiantur ex vix, pro paulo facilis vulputate ut. Usu no homero meliore, est ei hinc tota paulo. Mollis intellegat disputationi sea et. Pro bonorum habemus ut, &#129409;");
 
 INSERT INTO cats (cat_name) VALUES

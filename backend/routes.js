@@ -1,9 +1,23 @@
 const config = require('./app.config');
 const database = require('./database');
+const multer = require('multer');
+var path = require('path');
+const uuidv1 = require('uuid/v1');
 
 function authenticate(password) {
     return !!password && (password == config.token || password == config.admin_token);
 }
+// SET STORAGE
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, path.join(__dirname, 'public'))
+	},
+	filename: function (req, file, cb) {
+		cb(null, uuidv1())
+	}
+})
+
+var upload = multer({ storage: storage })
 
 const configureRoutes = function(app) {
     app.use((req, res, next) => {
@@ -20,14 +34,38 @@ const configureRoutes = function(app) {
         }
     });
 
-    app.post('/task', (req, res) => {
+    app.post('/completion', (req, res) => {
         database.addCompletor((result) => {
             res.send(result);
         }, req.body);
     });
 
+    app.post('/message', (req, res) => {
+        database.addMessage((result) => {
+            res.send(result);
+        }, req.body);
+    });
+
+    app.delete('/message/:id', (req, res) => {
+        database.deleteMessage((result) => {
+            res.send(result);
+        }, req.params.id);
+    });
+
     app.get('/task', (req, res) => {
         database.getTasks((result) => {
+            res.send(result);
+        });
+    });
+
+    app.post('/task', (req, res) => {
+        database.newTask((result) => {
+            res.send(result);
+        }, req.body)
+    });
+
+    app.get('/messages', (req, res) => {
+        database.getMessages((result) => {
             res.send(result);
         });
     });
@@ -81,6 +119,17 @@ const configureRoutes = function(app) {
             })
         }
     });
+
+    app.post('/upload', upload.single('file'), (req, res, next) => {
+        const file = req.file
+        if (!file) {
+            const error = new Error('Please upload a file')
+            error.httpStatusCode = 400
+            res.send({ success: false })
+            return;
+        }
+        res.send({ success: true, data: file.filename })
+    })
 }
 
 module.exports = configureRoutes;

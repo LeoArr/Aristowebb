@@ -14,7 +14,7 @@
                                 <div class="title">
                                     <b>{{ task.title }}</b>
                                     <div class="exclusive" *ngIf="!task.moreThanOne">
-                                        Exclusiv
+                                        Exklusiv
                                     </div>
                                 </div>
                                 <div class="points">
@@ -37,7 +37,7 @@
 
                         <div class="completor-form" *ngIf="isAdmin">
                             <mat-form-field>
-                                <mat-label>Genomförare</mat-label>
+                                <mat-label>Ny genomförare</mat-label>
                                 <mat-select [(value)]="completor">
                                     <mat-option>None</mat-option>
                                     <mat-option *ngFor="let cat of cats" value="{{cat.id}}">{{ cat.name }}</mat-option>
@@ -49,7 +49,22 @@
             </mat-accordion>
     </div>
     <div class="admin-view" *ngIf="isAdmin">
-        Hej admin.
-        TODO admin ska kunna skapa tasks.
+        <h3>Nytt uppdrag</h3>
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Titel" formControlName="title" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="full-width">
+                <textarea matInput placeholder="Beskrivning" formControlName="description" required></textarea>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Poäng" formControlName="points" required>
+            </mat-form-field>
+            <mat-checkbox formControlName="exclusive">Exklusiv</mat-checkbox>
+            <br>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!taskForm.valid">Skicka</button>
+        </form>
     </div>
 </div>

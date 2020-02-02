@@ -1,4 +1,7 @@
 .tasks-view {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
     .header {
         width: 100%;
         text-align: center;
@@ -12,6 +15,9 @@
         .empty {
             width: 20px;
         }
+    }
+    .admin-view {
+        width: 100%;
     }
 }
 
@@ -34,4 +40,8 @@
 
 ::ng-deep .mat-expansion-panel {
     background: #a0c59c !important;
+}
+
+.full-width {
+    width: 100%;
 }

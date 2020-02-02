@@ -1,0 +1,46 @@
+<div class="aw-messages">
+    <div class="header">
+        <div class="reload" (click)="addMessage()">
+            <mat-icon aria-hidden="true" aria-label="reload">add_comment</mat-icon>
+        </div>
+        <h3>KLOTTERPLANK</h3>
+        <div class="reload" (click)="getMessages()">
+            <mat-icon aria-hidden="true" aria-label="reload">loop</mat-icon>
+        </div>
+    </div>
+    <div class="add-comment" *ngIf="adding">
+        <div class="header">
+            <b>Nytt klotter</b>
+        </div>
+        <div class="form">
+            <mat-form-field class="full-width">
+                <textarea matInput placeholder="Klotter" [(ngModel)]="messageText"></textarea>
+            </mat-form-field>
+            <input type="file" #fileInput (change)="onFileInput($event)" class="file-input">
+            <div class="buttons">
+                <button mat-raised-button color="accent" (click)="fileInput.click()">Bild</button>
+                <button mat-raised-button color="primary" [disabled]="!imgURL && !messageText" (click)="newMessage()">Skicka</button>
+            </div>
+            <div class="file-name">
+                {{ fileName }}
+            </div>
+            <div class="image" *ngIf="imgURL">
+                <img src="{{ imgURL }}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="messages">
+        <div class="message" *ngFor="let message of messages">
+            <div class="header">
+                <b>{{ message.author }}</b> <i>{{ message.posted | date:'MMM d, y, H:mm' }}</i>
+            </div>
+            <div class="body">
+                {{ message.message }}
+            </div>
+            <div class="image" *ngIf="!!message.image && message.image != 'undefined'">
+                <img src="{{ apiUrl + '/static/' + message.image }}" alt="">
+            </div>
+            <button mat-raised-button color="warn" (click)="delete(message.id)">Ta bort</button>
+        </div>
+    </div>
+</div>

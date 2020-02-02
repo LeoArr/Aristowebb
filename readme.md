@@ -3,6 +3,9 @@ inloggning är överdrivet enkel pga orka lägga tid på det
 
 lagt lite config-grejer i backend/app.config.js
 
+Att ett uppdrag är "Exklusivt" innebär att det är bara 1 person som kan få poäng för det.
+Först till kvarn osv.
+
 sql_seeder.sql innehåller skiss för databasen atm
 scriptet kan köras innefrån mysql med
 >>source sql_seeder.sql
