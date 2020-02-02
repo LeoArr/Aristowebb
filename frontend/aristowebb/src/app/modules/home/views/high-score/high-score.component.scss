@@ -1,0 +1,37 @@
+.high-score-view {
+    .header {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+        .reload {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 10px;
+        }
+        .empty {
+            width: 20px;
+        }
+    }
+    .scores {
+        .entry {
+            margin-left: auto;
+            margin-right: auto;
+            width: 95%;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            border-radius: 2px;
+        }
+    }
+}
+
+.darker {
+    background: #c2e4c8;
+}
+
+.first {
+    padding: 10px;
+    background: #ffffe5;
+    font-size: 1.5em;
+}

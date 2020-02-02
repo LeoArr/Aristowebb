@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
-  localStorageKey: 'token'
+  localStorageKey: 'token',
+  adminToken: '8426241b-f7bb-4cec-9f65-b515559cecc3',
 };
 
 /*

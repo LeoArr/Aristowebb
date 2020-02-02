@@ -1,6 +1,10 @@
 <div class="tasks-view">
     <div class="header">
-        <h3>Poängjakt!</h3>
+        <div class="empty"></div>
+        <h3>POÄNGJAKT!</h3>
+        <div class="reload" (click)="getTasks()">
+            <mat-icon aria-hidden="true" aria-label="reload">loop</mat-icon>
+        </div>
     </div>
     <div class="tasks">
             <mat-accordion>
@@ -30,7 +34,22 @@
                                 {{ completor }}
                             </div>
                         </div>
+
+                        <div class="completor-form" *ngIf="isAdmin">
+                            <mat-form-field>
+                                <mat-label>Genomförare</mat-label>
+                                <mat-select [(value)]="completor">
+                                    <mat-option>None</mat-option>
+                                    <mat-option *ngFor="let cat of cats" value="{{cat.id}}">{{ cat.name }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <button mat-stroked-button (click)="sendCompletor(task.id)" color="primary">Skicka</button>
+                        </div>
                 </mat-expansion-panel>
             </mat-accordion>
+    </div>
+    <div class="admin-view" *ngIf="isAdmin">
+        Hej admin.
+        TODO admin ska kunna skapa tasks.
     </div>
 </div>

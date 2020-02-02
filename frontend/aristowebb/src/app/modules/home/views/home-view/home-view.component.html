@@ -1,7 +1,11 @@
 <div class="home-view">
         <mat-tab-group>
-            <mat-tab label="Uppdrag"> <aw-tasks-view></aw-tasks-view> </mat-tab>
-            <mat-tab label="High score"> High score </mat-tab>
+            <mat-tab label="Uppdrag">
+                <aw-tasks-view [isAdmin]="isAdmin"></aw-tasks-view>
+            </mat-tab>
+            <mat-tab label="High score">
+                <aw-high-score></aw-high-score>
+            </mat-tab>
             <mat-tab label="Schema"> Schema </mat-tab>
             <mat-tab label="Klotterväggen"> Klotterväggen </mat-tab>
         </mat-tab-group>

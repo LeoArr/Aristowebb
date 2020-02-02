@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiResponse, Task } from '../models';
+import { ApiResponse, Task, Cat, Score } from '../models';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
@@ -20,18 +20,22 @@ export class HttpService implements CanActivate {
     constructor(private http: HttpClient,
                 private router: Router) { }
 
-    // post(post: Post): Observable<boolean> {
-    //     let token = localStorage.getItem(environment.localStorageKey);
-    //     return this.http.post<ApiResponse>(this.apiUrl + '/post', post,
-    //     { headers: { 
-    //         Authorization: token,
-    //         'Content-Type': 'application/json'
-    //     }}).pipe(
-    //         map((result: ApiResponse) => {
-    //             return result.success;
-    //         })
-    //     );
-    // }
+    addCompletion(taskId, catId): Observable<boolean> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        return this.http.post<ApiResponse>(this.apiUrl + '/task',
+        {
+            catId: catId,
+            taskId: taskId
+        },
+        { headers: { 
+            Authorization: token,
+            'Content-Type': 'application/json'
+        }}).pipe(
+            map((result: ApiResponse) => {
+                return result.success;
+            })
+        );
+    }
 
     // put(post: Post): Observable<boolean> {
     //     let token = localStorage.getItem(environment.localStorageKey);
@@ -73,6 +77,38 @@ export class HttpService implements CanActivate {
     //             })
     //         );
     // }
+
+    getScores(): Observable<Score[]> {
+        return this.http.get<ApiResponse>(this.apiUrl + '/high-score', 
+            { headers: { 
+                'Content-Type': 'application/json'
+            }
+        }).pipe(
+            map((response: ApiResponse) => {
+                if (response.success) {
+                    return <Score[]> response.data
+                } else {
+                    return [];
+                }
+            })
+        );
+    }
+
+    getCats(): Observable<Cat[]> {
+        return this.http.get<ApiResponse>(this.apiUrl + '/cat', 
+            { headers: { 
+                'Content-Type': 'application/json'
+            }
+        }).pipe(
+            map((response: ApiResponse) => {
+                if (response.success) {
+                    return <Cat[]> response.data
+                } else {
+                    return [];
+                }
+            })
+        );
+    }
 
     getTasks(): Observable<Task[]> {
         return this.http.get<ApiResponse>(this.apiUrl + '/task', 

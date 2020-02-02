@@ -13,6 +13,14 @@ const toTask = function(task) {
     }
 }
 
+const toCat = function(cat) {
+    if (!cat) return null;
+    return {
+        id: cat.id,
+        name: cat.cat_name
+    }
+}
+
 var database = {
     connection: mysql.createConnection({
         host     : config.db_host,
@@ -38,13 +46,34 @@ var database = {
             });
         });
     },
-    // getPost: function(callback, id) {
-    //     var sql = "SELECT * FROM posts WHERE id=" + id + ";";
-    //     this.connection.query(sql, function (err, result) {
-    //         if (err) return callback({ success: false, message: err });
-    //         callback({ success: true, data: !!result ? toModel(result[0]) : result });
-    //     });
-    // },
+    getCats: function(callback, id) {
+        var sql = "SELECT * FROM cats;";
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true, data: result.map(res => toCat(res)) });
+        });
+    },
+
+    getHighScore: function(callback, id) {
+        // var sql = "SELECT * FROM completions INNER JOIN cats ON cats.id = completions.cat_id INNER JOIN tasks ON tasks.id = completions.task_id;";
+        var sql = "SELECT cats.cat_name as name, SUM(tasks.points) as score FROM completions ";
+        sql += "INNER JOIN cats ON cats.id = completions.cat_id "
+        sql += "INNER JOIN tasks ON tasks.id = completions.task_id GROUP BY cats.id "
+        sql += "ORDER BY score DESC;"
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true, data: result });
+        });
+    },
+
+    addCompletor: function(callback, completion) {
+        var sql = "INSERT INTO completions (task_id, cat_id) VALUES (" + completion.taskId + ", " + completion.catId + ")";
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            return callback({ success: true });
+        })
+    },
+
     // createPost: function(callback, post) {
     //     var self = this;
         

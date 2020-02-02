@@ -20,8 +20,26 @@ const configureRoutes = function(app) {
         }
     });
 
+    app.post('/task', (req, res) => {
+        database.addCompletor((result) => {
+            res.send(result);
+        }, req.body);
+    });
+
     app.get('/task', (req, res) => {
         database.getTasks((result) => {
+            res.send(result);
+        });
+    });
+
+    app.get('/high-score', (req, res) => {
+        database.getHighScore((result) => {
+            res.send(result);
+        });
+    });
+
+    app.get('/cat', (req, res) => {
+        database.getCats((result) => {
             res.send(result);
         });
     });

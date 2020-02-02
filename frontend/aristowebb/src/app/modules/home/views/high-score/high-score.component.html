@@ -1,0 +1,25 @@
+<div class="high-score-view">
+    <div class="header">
+        <div class="empty"></div>
+        <h3>HIGH SCORE</h3>
+        <div class="reload" (click)="getScores()">
+            <mat-icon aria-hidden="true" aria-label="reload">loop</mat-icon>
+        </div>
+    </div>
+    <div class="scores">
+        <div class="entry"
+                *ngFor="let score of scores; let i = index"
+                [class.darker]="i % 2 != 0"
+                [class.first]="i == 0">
+            <div class="place">
+                {{ i + 1 }}.
+            </div>
+            <div class="name">
+                <b>{{ score.name }}</b>
+            </div>
+            <div class="points">
+                {{ score.score }} Poäng
+            </div>
+        </div>
+    </div>
+</div>

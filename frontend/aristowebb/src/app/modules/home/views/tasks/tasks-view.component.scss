@@ -2,6 +2,16 @@
     .header {
         width: 100%;
         text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+        .reload {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 10px;
+        }
+        .empty {
+            width: 20px;
+        }
     }
 }
 
@@ -14,11 +24,14 @@
         display: flex;
         justify-content: space-between;
     }
-    .points {
+}
 
-    }
+.completor-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
 ::ng-deep .mat-expansion-panel {
-    background: #a0c59c;
+    background: #a0c59c !important;
 }
