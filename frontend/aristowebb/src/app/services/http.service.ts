@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiResponse } from '../models';
+import { ApiResponse, Task } from '../models';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
@@ -74,21 +74,21 @@ export class HttpService implements CanActivate {
     //         );
     // }
 
-    // getPosts(): Observable<Post[]> {
-    //     return this.http.get<ApiResponse>(this.apiUrl + '/post', 
-    //         { headers: { 
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).pipe(
-    //         map((response: ApiResponse) => {
-    //             if (response.success) {
-    //                 return <Post[]> response.data
-    //             } else {
-    //                 return [];
-    //             }
-    //         })
-    //     );
-    // }
+    getTasks(): Observable<Task[]> {
+        return this.http.get<ApiResponse>(this.apiUrl + '/task', 
+            { headers: { 
+                'Content-Type': 'application/json'
+            }
+        }).pipe(
+            map((response: ApiResponse) => {
+                if (response.success) {
+                    return <Task[]> response.data
+                } else {
+                    return [];
+                }
+            })
+        );
+    }
 
     authenticate(password: string): Observable<string> {
         return this.http.get<ApiResponse>(this.apiUrl + '/authenticate',

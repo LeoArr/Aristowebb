@@ -4,7 +4,7 @@
     </div>
     <div class="tasks">
             <mat-accordion>
-                <mat-expansion-panel *ngFor="let task of testTasks">
+                <mat-expansion-panel *ngFor="let task of tasks">
                         <mat-expansion-panel-header>
                             <mat-panel-title class="task-title">
                                 <div class="title">
@@ -21,11 +21,11 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div class="description">
-                            {{ task.description }}
+                            <i>{{ task.description }}</i>
                         </div>
 
                         <div class="completors">
-                            <h4>Avklarat av:</h4>
+                            <b>Gjort av:</b>
                             <div class="completor" *ngFor="let completor of task.completors">
                                 {{ completor }}
                             </div>

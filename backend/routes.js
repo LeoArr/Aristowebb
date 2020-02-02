@@ -1,4 +1,5 @@
 const config = require('./app.config');
+const database = require('./database');
 
 function authenticate(password) {
     return !!password && (password == config.token || password == config.admin_token);
@@ -19,11 +20,11 @@ const configureRoutes = function(app) {
         }
     });
 
-    // app.get('/post', (req, res) => {
-    //     database.getPosts((result) => {
-    //         res.send(result);
-    //     });
-    // });
+    app.get('/task', (req, res) => {
+        database.getTasks((result) => {
+            res.send(result);
+        });
+    });
 
     app.get('/is-authenticated', (req, res) => {
         res.send({ success: authenticate(req.headers.authorization)})
