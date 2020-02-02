@@ -38,6 +38,19 @@ const configureRoutes = function(app) {
         });
     });
 
+    app.get('/timetable', (req, res) => {
+        database.getTimetable((result) => {
+            res.send(result);
+        });
+    });
+
+    app.put('/timetable', (req, res) => {
+        database.updateTimetable((result) => {
+            res.send(result);
+        }, req.body.text);
+    });
+
+
     app.get('/cat', (req, res) => {
         database.getCats((result) => {
             res.send(result);

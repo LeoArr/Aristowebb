@@ -9,6 +9,13 @@
     </div>
     <div class="form">
         <mat-card>
+            <mat-form-field class="full-width">
+                <mat-label>Namn</mat-label>
+                <mat-select [(value)]="cat">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let cat of cats" value="{{cat.id}}">{{ cat.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <form (ngSubmit)="login($event)">
                 <mat-form-field class="full-width">
                     <input matInput type="password" placeholder="Lösenord" [(ngModel)]="password" name="password">

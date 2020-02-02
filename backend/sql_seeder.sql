@@ -27,6 +27,14 @@ CREATE TABLE completions(
     PRIMARY KEY (id)
 );
 
+CREATE TABLE timetable(
+    id              INT             NOT NULL    AUTO_INCREMENT,
+    timetable       TEXT            NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO timetable (timetable) VALUES ("<b>Lorem ipsum dolor sit amet</b> \n eum at suavitate sadipscing, elit dolorem efficiantur ex vix, pro paulo facilis vulputate ut. Usu no homero meliore, est ei hinc tota paulo. Mollis intellegat disputationi sea et. Pro bonorum habemus ut, &#129409;");
+
 INSERT INTO cats (cat_name) VALUES
 ("MM"),
 ("Mugg Mupp"),

@@ -1,0 +1,19 @@
+<div class="aw-timetable">
+    <div class="header">
+        <h3>SCHEMA</h3>
+    </div>
+    <div [innerHtml]="timetable" class="timetable"></div>
+    <div class="admin-view" *ngIf="isAdmin">
+        <br>
+        <mat-form-field>
+            <mat-label>Schema</mat-label>
+            <textarea matInput
+                        [(ngModel)]="timetable"
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="100"></textarea>
+        </mat-form-field>
+        <button mat-stroked-button (click)="updateTimetable()" color="primary">Skicka</button>
+    </div>
+</div>

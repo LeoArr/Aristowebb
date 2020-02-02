@@ -1,0 +1,17 @@
+.aw-timetable {
+    .header {
+        width: 100%;
+        text-align: center;
+    }
+    .timetable {
+        width: 100%;
+        white-space: pre-wrap;
+    }
+    .admin-view {
+        margin-top: 20px;
+        width: 100%;
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}

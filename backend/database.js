@@ -54,6 +54,22 @@ var database = {
         });
     },
 
+    getTimetable: function(callback) {
+        var sql = "SELECT timetable FROM timetable WHERE id = 1;"
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true, data: result[0].timetable });
+        });
+    },
+
+    updateTimetable: function(callback, newText) {
+        var sql = "UPDATE timetable SET timetable = '" + newText + "' WHERE id = 1"; 
+        this.connection.query(sql, function (err, result) {
+            if (err) return callback({ success: false, message: err });
+            callback({ success: true });
+        });
+    },
+
     getHighScore: function(callback, id) {
         // var sql = "SELECT * FROM completions INNER JOIN cats ON cats.id = completions.cat_id INNER JOIN tasks ON tasks.id = completions.task_id;";
         var sql = "SELECT cats.cat_name as name, SUM(tasks.points) as score FROM completions ";

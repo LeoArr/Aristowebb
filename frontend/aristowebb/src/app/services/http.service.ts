@@ -49,34 +49,36 @@ export class HttpService implements CanActivate {
     //         })
     //     );
     // }
-    
-    // delete(postId: number): Observable<boolean> {
-    //     let token = localStorage.getItem(environment.localStorageKey);
-    //     return this.http.delete<ApiResponse>(this.apiUrl + '/post/' + postId,
-    //     { headers: { 
-    //         Authorization: token,
-    //         'Content-Type': 'application/json'
-    //     }}).pipe(
-    //         map((result: ApiResponse) => {
-    //             return result.success;
-    //         })
-    //     );
-    // }
 
-    // getPost(id: number): Observable<Post> {
-    //     return this.http.get<ApiResponse>(this.apiUrl + '/post/' + id,
-    //         { headers: { 
-    //             'Content-Type': 'application/json'
-    //         }}).pipe(
-    //             map(response => {
-    //                 if (response.success) {
-    //                     return <Post> response.data
-    //                 } else {
-    //                     return undefined;
-    //                 }
-    //             })
-    //         );
-    // }
+
+    updateTimetable(newText: string): Observable<boolean> {
+        let token = localStorage.getItem(environment.localStorageKey);
+        return this.http.put<ApiResponse>(this.apiUrl + '/timetable', { text: newText },
+        { headers: { 
+            Authorization: token,
+            'Content-Type': 'application/json'
+        }}).pipe(
+            map((result: ApiResponse) => {
+                return result.success;
+            })
+        );
+    }
+
+    getTimetable(): Observable<string> {
+        return this.http.get<ApiResponse>(this.apiUrl + '/timetable', 
+            { headers: { 
+                'Content-Type': 'application/json'
+            }
+        }).pipe(
+            map((response: ApiResponse) => {
+                if (response.success) {
+                    return <string> response.data
+                } else {
+                    return 'Kunde inte hitta schemat just nu';
+                }
+            })
+        );
+    }
 
     getScores(): Observable<Score[]> {
         return this.http.get<ApiResponse>(this.apiUrl + '/high-score', 
